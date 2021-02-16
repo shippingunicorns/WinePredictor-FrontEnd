@@ -4,7 +4,7 @@ runs Wine Predictor website
 
 # IMPORTS
 # import packages to create and load environment variables
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 
 # to manage the website
@@ -33,7 +33,7 @@ from flaskext.markdown import Markdown
 # https://flask.palletsprojects.com/en/1.1.x/config/
 app = Flask(__name__)
 
-load_dotenv() # any code after this will be able to use environment variables
+# load_dotenv() # any code after this will be able to use environment variables
 
 
 # Debug
@@ -73,11 +73,11 @@ def home_init():
 
     # FORMS
     ws_form = WineScoreForm()
-    ws_form.substance_id.choices = [1, 0] #db_func.read_substance_labels()
+    ws_form.year.choices = [1, 0] #db_func.read_substance_labels()
 
     # import ipdb; ipdb.set_trace()
-    return (ws_form
-            ws_form.substance_id.choices)
+    return (ws_form,
+            ws_form.year.choices)
 
 
 # ROUTES
@@ -96,7 +96,7 @@ def home():
     returns home template with initialized variables
     """
     (ws_form,
-     ws_form.substance_id.choices) = home_init()
+     ws_form.year.choices) = home_init()
 
     # display_added_subst = request.args.get('display_added_subst',
     #                                        default=False)
@@ -114,13 +114,13 @@ def submitwine():
     returns home template with initialized variables after submitwine
     """
     (ws_form,
-     ws_form.substance_id.choices) = home_init()
+     ws_form.year.choices) = home_init()
 
     # VARIABLES
-    subst_id = str(si_form.substance_id.data)
-    subst_qtty = str(si_form.quantity.data)
+    subst_id = str(ws_form.wine_type.data)
+    subst_qtty = str(ws_form.year.data)
 
-    if si_form.validate_on_submit():
+    if ws_form.validate_on_submit():
         # validation of fields
 
         # get score

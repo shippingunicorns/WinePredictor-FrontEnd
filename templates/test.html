@@ -1,0 +1,27 @@
+{% from "_renderfield.html" import renderfield %}
+
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">Add new substance intake record</h4>
+        </div>
+        <div class="panel-body">
+
+         <form method="POST" action="/test">
+            {{ mr_form.csrf_token }}
+            {{ renderfield(mr_form.happy) }}
+            {{ renderfield(mr_form.focused) }}
+            {{ renderfield(mr_form.stressed) }}
+            <input type="submit" value="Submit">
+        </form>
+
+
+
+        {% if display_added_record %}
+        <h4>👍 Intake record added!</h4>
+        {% else %}
+        {% endif %}
+
+
+        </div>
+      </div>

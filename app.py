@@ -36,8 +36,8 @@ app = Flask(__name__)
 # load_dotenv() # any code after this will be able to use environment variables
 
 
-# Debug
-app.config['DEBUG'] = False
+# Debug - if in this mode, change lines below + end of code
+app.config['DEBUG'] = True
 app.config['FLASK_ENV'] = 'development'
 
 app.config['SECRET_KEY'] = 'shoppingdemos'
@@ -46,7 +46,7 @@ app.config['SECRET_KEY'] = 'shoppingdemos'
 # enable/disable CSRF token
 app.config['WTF_CSRF_ENABLED'] = True
 # update CSFR secret key; default is SECRET_KEY
-app.config['WTF_CSRF_SECRET_KEY'] = 'istoryRepeatsITself'
+app.config['WTF_CSRF_SECRET_KEY'] = 'this_is_SPARTAAAAA'
 # change csrf time limit in sec (1 hour/3600sec by default)
 app.config['WTF_CSRF_TIME_LIMIT'] = 3600
 
@@ -73,10 +73,12 @@ def home_init():
 
     # FORMS
     ws_form = WineScoreForm()
-    ws_form.year.choices = [1, 0] #db_func.read_substance_labels()
+    ws_form.variety.choices = ["Type A", "Type B"]
+    ws_form.year.choices = list(range(1970, 2021, 1))
 
     # import ipdb; ipdb.set_trace()
     return (ws_form,
+            ws_form.variety.choices,
             ws_form.year.choices)
 
 
@@ -96,15 +98,10 @@ def home():
     returns home template with initialized variables
     """
     (ws_form,
-     ws_form.year.choices) = home_init()
-
-    # display_added_subst = request.args.get('display_added_subst',
-    #                                        default=False)
-
-    # import ipdb; ipdb.set_trace()
+            ws_form.variety.choices,
+            ws_form.year.choices) = home_init()
 
     return render_template('home.html',
-                            # home_init(),
                             **locals() # returns all local variables
                            )
 
@@ -114,11 +111,10 @@ def submitwine():
     returns home template with initialized variables after submitwine
     """
     (ws_form,
-     ws_form.year.choices) = home_init()
+            ws_form.variety.choices,
+            ws_form.year.choices) = home_init()
 
     # VARIABLES
-    subst_id = str(ws_form.wine_type.data)
-    subst_qtty = str(ws_form.year.data)
 
     if ws_form.validate_on_submit():
         # validation of fields
@@ -142,7 +138,7 @@ def projects():
 
     return render_template('markdown.html',
                            mkd_text=howto_content,
-                           n_cols=2,
+                           n_cols=1,
                            page_title="How to Use This Website")
 
 
@@ -151,8 +147,8 @@ if __name__ == '__main__':
     runs only if the app is ran on the terminal
     initializes the website
     """
-    app.run()
-    # app.run(debug=True)
+    # app.run()
+    app.run(debug=True)
 
     """
     about debug=True:

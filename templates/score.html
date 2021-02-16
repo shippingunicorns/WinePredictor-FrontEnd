@@ -2,38 +2,31 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">Score</h3>
+    <h4 class="panel-title">Get wine score</h4>
   </div>
   <div class="panel-body">
 
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h4 class="panel-title">Get wine score</h4>
-        </div>
-        <div class="panel-body">
-
-         <form method="POST" action="{{ url_for('submitwine') }}">
-            {{ ws_form.csrf_token }}
-            {{ renderfield(ws_form.wine_type) }}
-            {{ renderfield(ws_form.year) }}
-            <input type="submit" value="Submit">
-        </form>
-
-
-
-        {% if display_added_record %}
-        <h4>👍 This is the wine score:</h4>
-        {% else %}
-        {% endif %}
-
-
-        </div>
-      </div>
+   <form method="POST" action="{{ url_for('submitwine') }}">
+      {{ ws_form.csrf_token }}
+      {{ renderfield(ws_form.variety) }}
+      {{ renderfield(ws_form.title) }}
+      {{ renderfield(ws_form.designation) }}
+      {{ renderfield(ws_form.country) }}
+      {{ renderfield(ws_form.province) }}
+      {{ renderfield(ws_form.winery) }}
+      {{ renderfield(ws_form.price) }}
+      {{ renderfield(ws_form.description(size=60, maxlength=1000)) }}
+      <input type="submit" value="Submit">
+  </form>
 
 
 
+  {% if display_added_record %}
+  <h4>👍 This is the wine score:</h4>
+  {% else %}
+  {% endif %}
 
 
   </div>
 </div>
+

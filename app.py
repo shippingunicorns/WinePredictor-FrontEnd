@@ -26,6 +26,9 @@ from flask_bootstrap import Bootstrap
 # to manage current date
 from time_functions import current_date_str, current_datetime_str, current_time_str
 
+# to read from api
+from api import read_api
+
 # import markdown rendering
 from flaskext.markdown import Markdown
 
@@ -74,12 +77,14 @@ def home_init():
     # FORMS
     ws_form = WineScoreForm()
     ws_form.variety.choices = ["Type A", "Type B"]
-    ws_form.year.choices = list(range(1970, 2021, 1))
+    ws_form.year.choices = list(range(1970, 2021 +1, 1))
+    ws_form.country.choices = ["london", "US"]
 
     # import ipdb; ipdb.set_trace()
     return (ws_form,
             ws_form.variety.choices,
-            ws_form.year.choices)
+            ws_form.year.choices,
+            ws_form.country.choices)
 
 
 # ROUTES
@@ -99,7 +104,8 @@ def home():
     """
     (ws_form,
             ws_form.variety.choices,
-            ws_form.year.choices) = home_init()
+            ws_form.year.choices,
+            ws_form.country.choices) = home_init()
 
     return render_template('home.html',
                             **locals() # returns all local variables
@@ -112,19 +118,33 @@ def submitwine():
     """
     (ws_form,
             ws_form.variety.choices,
-            ws_form.year.choices) = home_init()
+            ws_form.year.choices,
+            ws_form.country.choices) = home_init()
 
     # VARIABLES
+    # si_date_str = current_date_str()
+    input_variety = str(ws_form.variety.data)
+    input_winery = str(ws_form.winery.data)
+    input_country = str(ws_form.country.data)
+    input_province = str(ws_form.province.data)
+    input_year = str(ws_form.year.data)
+    input_price = str(ws_form.price.data)
+    input_description = str(ws_form.description.data)
 
     if ws_form.validate_on_submit():
         # validation of fields
 
         # get score
+        api_results = read_api(place=input_country)
 
         # display score
         display_added_record = True # shows success message
 
-        return redirect(url_for('home'))
+        return render_template('home.html', **locals())
+        # works but resends POST request/form at page refresh:
+        # render_template('home.html', **locals())
+        # works but doesn't display success message:
+        # redirect(url_for('home'))
 
 
     return render_template('home.html', **locals())

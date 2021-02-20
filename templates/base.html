@@ -13,6 +13,9 @@
     <link href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
+    <script defer src="static/font-awesome.js"></script>
+
+
   </head>
 
   <body>
@@ -20,11 +23,11 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/home">Wine Predictor</a>
+        <a class="navbar-brand" href="/home">🍷 Wine Predictor</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/home">Home</a></li>
+          <li><a href="/home">Home</a></li> <!-- class="active" -->
           <li><a href="/howto">How to</a></li>
         </ul>
       </div>

@@ -2,6 +2,15 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
+    <h4 class="panel-title">About Wine Predictor</h4>
+  </div>
+  <div class="panel-body">Wine Predictor helps you understand the quality of a wine based on 130,000+ expert reviews. Whether you are purchasing a wine, were gited one or simply want to check the score of a wine for curiosity or hobbyist purposes, we will provide you a 1- to 5-star score.
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
     <h4 class="panel-title">Get wine score</h4>
   </div>
   <div class="panel-body">
@@ -9,24 +18,89 @@
    <form method="POST" action="{{ url_for('submitwine') }}">
       {{ ws_form.csrf_token }}
       {{ renderfield(ws_form.variety) }}
-      {{ renderfield(ws_form.title) }}
-      {{ renderfield(ws_form.designation) }}
+      {{ renderfield(ws_form.winery) }}
       {{ renderfield(ws_form.country) }}
       {{ renderfield(ws_form.province) }}
-      {{ renderfield(ws_form.winery) }}
+      {{ renderfield(ws_form.year) }}
       {{ renderfield(ws_form.price) }}
-      {{ renderfield(ws_form.description(size=60, maxlength=1000)) }}
+      {{ renderfield(ws_form.description) }}
+
       <input type="submit" value="Submit">
   </form>
+  </div>
+</div>
+
+{% if display_added_record %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title">Results</h4>
+  </div>
+  <div class="panel-body">
+
+    <h4>👍 This is your wine's score:</h4>
+    ⭐
+    <br>
+    ★★★★☆
+
+    <i class="fa fa-star" aria-hidden="true"></i>
+    <i class="fa fa-star" aria-hidden="true"></i>
+    <i class="fa fa-star" aria-hidden="true"></i>
+    <i class="fa fa-star-o" aria-hidden="true"></i>
+
+    <br>
+    API-fetched weather forecast for the COUNTRY you inputted is:
+    <br>
+    {{ api_results }}
 
 
 
-  {% if display_added_record %}
-  <h4>👍 This is the wine score:</h4>
-  {% else %}
-  {% endif %}
+    <h4>These are your wine's details:</h4>
+
+      <table class="table">
+
+          <tr class="row">
+           <td class="cell"><b>Variety</b></td>
+           <td class="cell">{{ input_variety }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Winery</td>
+           <td class="cell">{{ input_winery }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Country</td>
+           <td class="cell">{{ input_country }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Province</td>
+           <td class="cell">{{ input_province }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Year</td>
+           <td class="cell">{{ input_year }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Price</td>
+           <td class="cell">{{ input_price }}</td>
+          </tr>
+
+          <tr class="row">
+           <td class="cell">Description</td>
+           <td class="cell">{{ input_description }}</td>
+          </tr>
+      </table>
 
 
   </div>
 </div>
+
+  {% else %}
+  {% endif %}
+
+
+
 

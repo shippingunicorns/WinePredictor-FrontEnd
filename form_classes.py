@@ -10,25 +10,20 @@ class WineScoreForm(FlaskForm):
     variety = SelectField(
         label='Variety',
         choices=[],
-        validators=[InputRequired()] #,
+        validators=[]#InputRequired()] #,
                     # AnyOf(values=subst_avail_ids,
                     #      message='Must be a valid substance ID')
                     # ]
         )
 
-    title = StringField(
-        label='Title',
-        validators=[] # optional field
-        )
-
-    designation = StringField(
-        label='Designation',
-        validators=[] # optional field
+    winery = StringField(
+        label='Winery',
+        validators=[] #InputRequired()]
         )
 
     country = SelectField(
         label='Country',
-        validators=[InputRequired()]
+        validators=[ ] #InputRequired()]
         )
 
     province = StringField(
@@ -36,23 +31,18 @@ class WineScoreForm(FlaskForm):
         validators=[] # optional field
         )
 
-    winery = StringField(
-        label='Winery',
-        validators=[InputRequired()]
+    year = SelectField( # IntegerField(
+        label='Year',
+        choices=[],
+        validators=[] #InputRequired()]
         )
 
     price = IntegerField(
         label='Price',
-        validators=[InputRequired()]
+        validators=[] #InputRequired()]
         )
 
     description = StringField(
         label='Description',
         validators=[] # optional field
-        )
-
-    year = SelectField( # IntegerField(
-        label='Year',
-        choices=[],
-        validators=[InputRequired()]
         )

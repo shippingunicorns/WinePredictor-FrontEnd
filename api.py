@@ -42,4 +42,14 @@ def read_api(place="london"):
     f_string = f"{api_output[0]['title']}: {api_output[0]['woeid']} ({api_output[0]['latt_long']})"
     return f_string
 
+def read_api_fx():
+    import requests
+    url = "https://api.exchangeratesapi.io/latest?base=USD"
+    api_output = requests.get(url).json()
+    rates_values_dict = api_output['rates']
+    rates_list = sorted(list(api_output['rates'].keys()))
+    return [rates_values_dict, rates_list]
+
+# print(read_api_fx())
+
 # print(read_api())

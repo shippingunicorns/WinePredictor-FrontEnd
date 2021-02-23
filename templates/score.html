@@ -23,6 +23,7 @@
       {{ renderfield(ws_form.province) }}
       {{ renderfield(ws_form.year) }}
       {{ renderfield(ws_form.price) }}
+      {{ renderfield(ws_form.price_currency) }}
       {{ renderfield(ws_form.description) }}
 
       <input type="submit" value="Submit">
@@ -38,20 +39,12 @@
   <div class="panel-body">
 
     <h4>👍 This is your wine's score:</h4>
-    ⭐
-    <br>
-    ★★★★☆
-
-    <i class="fa fa-star" aria-hidden="true"></i>
-    <i class="fa fa-star" aria-hidden="true"></i>
-    <i class="fa fa-star" aria-hidden="true"></i>
-    <i class="fa fa-star-o" aria-hidden="true"></i>
-
+    <h2>{{ api_results_2 }}/5 {{ api_stars }}</h2>
     <br>
     API-fetched weather forecast for the COUNTRY you inputted is:
     <br>
     {{ api_results }}
-
+<br><br><br>
 
 
     <h4>These are your wine's details:</h4>
@@ -64,32 +57,32 @@
           </tr>
 
           <tr class="row">
-           <td class="cell">Winery</td>
+           <td class="cell"><b>Winery</b></td>
            <td class="cell">{{ input_winery }}</td>
           </tr>
 
           <tr class="row">
-           <td class="cell">Country</td>
+           <td class="cell"><b>Country</b></td>
            <td class="cell">{{ input_country }}</td>
           </tr>
 
           <tr class="row">
-           <td class="cell">Province</td>
+           <td class="cell"><b>Province</b></td>
            <td class="cell">{{ input_province }}</td>
           </tr>
 
           <tr class="row">
-           <td class="cell">Year</td>
+           <td class="cell"><b>Year</b></td>
            <td class="cell">{{ input_year }}</td>
           </tr>
 
           <tr class="row">
-           <td class="cell">Price</td>
-           <td class="cell">{{ input_price }}</td>
+           <td class="cell"><b>Price</b></td>
+           <td class="cell">{{ input_price }} {{ input_price_currency }} | {{ price_usd }} USD</td>
           </tr>
 
           <tr class="row">
-           <td class="cell">Description</td>
+           <td class="cell"><b>Description</b></td>
            <td class="cell">{{ input_description }}</td>
           </tr>
       </table>

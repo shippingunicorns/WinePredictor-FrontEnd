@@ -27,7 +27,7 @@ from flask_bootstrap import Bootstrap
 from time_functions import current_date_str, current_datetime_str, current_time_str
 
 # to read from api
-from api import read_api
+from api import read_api, read_api_fx
 
 # import markdown rendering
 from flaskext.markdown import Markdown
@@ -76,15 +76,31 @@ def home_init():
 
     # FORMS
     ws_form = WineScoreForm()
-    ws_form.variety.choices = ["Type A", "Type B"]
     ws_form.year.choices = list(range(1970, 2021 +1, 1))
-    ws_form.country.choices = ["london", "US"]
+    ws_form.country.choices = ['london', 'Argentina', 'Armenia', 'Australia',
+                               'Austria', 'Bosnia and Herzegovina', 'Brazil',
+                               'Bulgaria', 'Canada', 'Chile', 'China',
+                               'Croatia', 'Cyprus', 'Czech Republic', 'Egypt',
+                               'England', 'France', 'Georgia', 'Germany',
+                               'Greece', 'Hungary', 'India', 'Israel', 'Italy',
+                               'Lebanon', 'Luxembourg', 'Macedonia', 'Mexico',
+                               'Moldova', 'Morocco', 'New Zealand', 'Peru',
+                               'Portugal', 'Romania', 'Serbia', 'Slovakia',
+                               'Slovenia', 'South Africa', 'Spain',
+                               'Switzerland', 'Turkey', 'Ukraine', 'Uruguay',
+                               'US']
+    ws_form.price_currency.choices = read_api_fx()[1]
+    fx_rates_values_dict = read_api_fx()[0]
+    fx_rates_list = read_api_fx()[1]
+
 
     # import ipdb; ipdb.set_trace()
     return (ws_form,
-            ws_form.variety.choices,
             ws_form.year.choices,
-            ws_form.country.choices)
+            ws_form.country.choices,
+            ws_form.price_currency.choices,
+            fx_rates_values_dict,
+            fx_rates_list)
 
 
 # ROUTES
@@ -103,9 +119,11 @@ def home():
     returns home template with initialized variables
     """
     (ws_form,
-            ws_form.variety.choices,
             ws_form.year.choices,
-            ws_form.country.choices) = home_init()
+            ws_form.country.choices,
+            ws_form.price_currency.choices,
+            fx_rates_values_dict,
+            fx_rates_list) = home_init()
 
     return render_template('home.html',
                             **locals() # returns all local variables
@@ -117,9 +135,11 @@ def submitwine():
     returns home template with initialized variables after submitwine
     """
     (ws_form,
-            ws_form.variety.choices,
             ws_form.year.choices,
-            ws_form.country.choices) = home_init()
+            ws_form.country.choices,
+            ws_form.price_currency.choices,
+            fx_rates_values_dict,
+            fx_rates_list) = home_init()
 
     # VARIABLES
     # si_date_str = current_date_str()
@@ -128,7 +148,10 @@ def submitwine():
     input_country = str(ws_form.country.data)
     input_province = str(ws_form.province.data)
     input_year = str(ws_form.year.data)
-    input_price = str(ws_form.price.data)
+    input_price = round(float(ws_form.price.data),2)
+    input_price_currency = str(ws_form.price_currency.data)
+    currency_fx = float(fx_rates_values_dict[input_price_currency])
+    price_usd = round(input_price/currency_fx, 2)
     input_description = str(ws_form.description.data)
 
     if ws_form.validate_on_submit():
@@ -136,6 +159,8 @@ def submitwine():
 
         # get score
         api_results = read_api(place=input_country)
+        api_results_2 = 4
+        api_stars = '⭐' * api_results_2
 
         # display score
         display_added_record = True # shows success message
@@ -150,16 +175,16 @@ def submitwine():
     return render_template('home.html', **locals())
     # **locals returns all local variables
 
-@app.route('/howto', methods=['GET'])
-def projects():
-    projects_content = ""
-    with open("markdown/how-to-use.md", "r") as f:
-        howto_content = f.read()
+# @app.route('/howto', methods=['GET'])
+# def projects():
+#     projects_content = ""
+#     with open("markdown/how-to-use.md", "r") as f:
+#         howto_content = f.read()
 
-    return render_template('markdown.html',
-                           mkd_text=howto_content,
-                           n_cols=1,
-                           page_title="How to Use This Website")
+#     return render_template('markdown.html',
+#                            mkd_text=howto_content,
+#                            n_cols=1,
+#                            page_title="How to Use This Website")
 
 
 if __name__ == '__main__':

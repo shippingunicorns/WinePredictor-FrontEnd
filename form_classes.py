@@ -7,9 +7,8 @@ from wtforms.validators import InputRequired #, Length, AnyOf
 # https://wtforms.readthedocs.io/en/2.3.x/fields/#field-definitions
 
 class WineScoreForm(FlaskForm):
-    variety = SelectField(
+    variety = StringField(
         label='Variety',
-        choices=[],
         validators=[]#InputRequired()] #,
                     # AnyOf(values=subst_avail_ids,
                     #      message='Must be a valid substance ID')
@@ -23,7 +22,7 @@ class WineScoreForm(FlaskForm):
 
     country = SelectField(
         label='Country',
-        validators=[ ] #InputRequired()]
+        validators=[] #InputRequired()]
         )
 
     province = StringField(
@@ -33,12 +32,16 @@ class WineScoreForm(FlaskForm):
 
     year = SelectField( # IntegerField(
         label='Year',
-        choices=[],
         validators=[] #InputRequired()]
         )
 
     price = IntegerField(
         label='Price',
+        validators=[] #InputRequired()]
+        )
+
+    price_currency = SelectField(
+        label='Price Currency',
         validators=[] #InputRequired()]
         )
 

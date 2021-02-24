@@ -169,8 +169,8 @@ def submitwine():
                 variety=[input_variety],
                 winery=[input_winery]
                 ))
-    feat_eng_x = feat.transform(df)
-    prediction = model.predict(feat_eng_x)[0]
+    feat_eng_x = FEATURE.transform(df)
+    prediction = MODEL.predict(feat_eng_x)[0]
     if ws_form.validate_on_submit():
         # validation of fields
 

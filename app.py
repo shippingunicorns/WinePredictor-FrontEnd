@@ -36,6 +36,7 @@ import joblib
 import pandas as pd
 FEATURE = joblib.load('model/feature_eng.joblib')
 MODEL = joblib.load('model/model.joblib')
+
 # APP CONFIG
 # https://flask.palletsprojects.com/en/1.1.x/config/
 app = Flask(__name__)
@@ -68,8 +69,6 @@ Markdown(app)
 
 # Bootstrap
 bootstrap = Bootstrap(app)
-
-
 
 # METHODS
 def home_init():
@@ -158,6 +157,7 @@ def submitwine():
     price_usd = round(input_price/currency_fx, 2)
     input_description = str(ws_form.description.data)
     region = "Other"
+    # generate the title from user defined inputs
     title = f"{input_winery} {input_year} {input_variety} ({input_province})"
     df = pd.DataFrame(
             dict(country=[input_country],
@@ -171,11 +171,12 @@ def submitwine():
                 ))
     feat_eng_x = FEATURE.transform(df)
     prediction = MODEL.predict(feat_eng_x)[0]
+    print(prediction)
     if ws_form.validate_on_submit():
         # validation of fields
 
         # get score 
-        # api_results = read_api(place=input_country)
+        api_results = read_api(place=input_country)
         api_results_2 = prediction
         api_stars = '⭐' * api_results_2
 

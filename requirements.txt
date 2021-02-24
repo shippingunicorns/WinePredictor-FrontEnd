@@ -61,3 +61,4 @@ Flask-Markdown==0.3
 importlib-metadata==2.0.0
 Markdown==3.3.3
 requests==2.25.1
+pandas==0.24.2

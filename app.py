@@ -176,7 +176,7 @@ def submitwine():
         # validation of fields
 
         # get score 
-        api_results = read_api(place=input_country)
+        # api_results = read_api(place=input_country)
         api_results_2 = prediction
         api_stars = '⭐' * api_results_2
 

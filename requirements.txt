@@ -62,3 +62,5 @@ importlib-metadata==2.0.0
 Markdown==3.3.3
 requests==2.25.1
 pandas==0.24.2
+winemodel @ git+git://github.com/jbmarcelino1/WinePredictor
+joblib==0.14.1

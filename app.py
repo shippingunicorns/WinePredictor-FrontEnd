@@ -158,7 +158,7 @@ def submitwine():
     price_usd = round(input_price/currency_fx, 2)
     input_description = str(ws_form.description.data)
     region = "Other"
-    title = f"{input_winery} {input_year} {input_variety} ({input_province})""
+    title = f"{input_winery} {input_year} {input_variety} ({input_province})"
     df = pd.DataFrame(
             dict(country=[input_country],
                 description=[input_description],
@@ -176,7 +176,7 @@ def submitwine():
 
         # get score 
         # api_results = read_api(place=input_country)
-        api_results_2 = predictions
+        api_results_2 = prediction
         api_stars = '⭐' * api_results_2
 
         # display score

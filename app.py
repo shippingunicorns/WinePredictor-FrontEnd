@@ -32,6 +32,10 @@ from api import read_api, read_api_fx
 # import markdown rendering
 from flaskext.markdown import Markdown
 
+import joblib
+import pandas as pd
+FEATURE = joblib.load('model/feature_eng.joblib')
+MODEL = joblib.load('model/model.joblib')
 # APP CONFIG
 # https://flask.palletsprojects.com/en/1.1.x/config/
 app = Flask(__name__)
@@ -153,13 +157,26 @@ def submitwine():
     currency_fx = float(fx_rates_values_dict[input_price_currency])
     price_usd = round(input_price/currency_fx, 2)
     input_description = str(ws_form.description.data)
-
+    region = "Other"
+    title = f"{input_winery} {input_year} {input_variety} ({input_province})""
+    df = pd.DataFrame(
+            dict(country=[input_country],
+                description=[input_description],
+                price=[price_usd],
+                province=[input_province],
+                region_1=[region],
+                title=[title],
+                variety=[input_variety],
+                winery=[input_winery]
+                ))
+    feat_eng_x = feat.transform(df)
+    prediction = model.predict(feat_eng_x)[0]
     if ws_form.validate_on_submit():
         # validation of fields
 
-        # get score
-        api_results = read_api(place=input_country)
-        api_results_2 = 4
+        # get score 
+        # api_results = read_api(place=input_country)
+        api_results_2 = predictions
         api_stars = '⭐' * api_results_2
 
         # display score
